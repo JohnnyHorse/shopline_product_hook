@@ -87,7 +87,7 @@ gcloud functions deploy shopline-webhook \
 
 ### 方式二：用 curl
 
-```json
+```bash
 curl --request POST \
      --url https://open.shopline.io/v1/webhooks \
      --header 'accept: application/json' \
@@ -104,5 +104,4 @@ curl --request POST \
     "product/back_in_stock"
   ]
 }
-'
 ```
