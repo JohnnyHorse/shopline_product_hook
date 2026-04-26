@@ -218,14 +218,14 @@ def handle_webhook(request):
         topic = payload.get("topic", "")
         print(f"收到 Webhook，Topic: {topic}")
 
-        if topic in ("product/create", "product/update"):
+        if topic in ("product/create", "product/update", "product/back_in_stock"):
             # 解析並存入或更新至 BigQuery
             records = parse_product_payload(payload)
             if records:
                 upsert_records_to_bq(records)
                 print(f"成功 Upsert {len(records)} 筆商品記錄 (ProductID: {records[0].get('product_id')})")
                 
-        elif topic in ("product/delete", "product/remove"):
+        elif topic == "product/remove":
             # 刪除 BigQuery 中的資料
             resource = payload.get("resource", {})
             product_id = resource.get("_id") or resource.get("id")
