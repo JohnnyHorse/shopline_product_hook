@@ -7,9 +7,10 @@
   - 自動拆解多規格 (Variations) 的商品為獨立資料列，符合正規化設計。
   - 將多層級的翻譯字串及圖片陣列安全提取並轉換。
 - **穩定的同步機制**：
-  - 遇到 `product/create` 或 `product/update` 時，會使用 BigQuery 的 `MERGE` 語句自動比對 `product_id` 與 `product_variation_id`，確保資料不重複 (Upsert 邏輯)。
+  - 遇到 `product/create`、`product/update` 或 `product/back_in_stock` 時，會使用 BigQuery 的 `MERGE` 語句自動比對 `product_id` 與 `product_variation_id`，確保資料不重複 (Upsert 邏輯)。
   - 遇到 `product/delete` 則透過 `DELETE` 語句移除 BigQuery 中該商品所有規格資料。
-- **複合主鍵**:shopline原本設定`id`作為主鍵，但會造成商品規格內的資料變得不好查詢，因此將`product_id` 與 `product_variation_id` 的組合作為複合主鍵，用以確保資料不重複的情況下，又可以很好的瀏覽商品規格內的資料。
+- **複合主鍵**：
+  - shopline原本設定`id`作為主鍵，但會造成商品規格內的資料變得不好查詢，因此將`product_id` 與 `product_variation_id` 的組合作為複合主鍵，用以確保資料不重複的情況下，又可以很好的瀏覽商品規格內的資料。
 ---
 
 ## 專案目錄
@@ -77,14 +78,6 @@ gcloud functions deploy shopline-webhook \
 ---
 
 ## Shopline 後台設定
-1. 進入 Shopline 商店後台。
-2. 找到 **設定 > Webhook**（或是應用程式的 Webhook 綁定區塊）。
-3. 建立三組訂閱，事件分別選擇：
-   - `產品建立` (`product/create`)
-   - `產品更新` (`product/update`)
-   - `產品刪除` (`product/delete`)
-4. 回傳網址 (URL) 請填上您剛剛部署完獲得的 Webhook URL。
-5. 儲存設定。接下來任何商品變動都會自動同步進 BigQuery 囉！
 
 ### 方式一：用 SHOPLINE API REFERENCE
 
