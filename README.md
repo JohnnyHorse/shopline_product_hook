@@ -71,7 +71,7 @@ gcloud functions deploy shopline-product-webhook \
 - `--trigger-http`：指定此函式透過 HTTP 網址觸發。
 - `--allow-unauthenticated`：允許未經驗證的外部服務（例如 Shopline）呼叫。
 - `--entry-point handle_webhook`：指定 `main.py` 裡的 `handle_webhook` 函式作為程式進入點。
-- `--set-env-vars PROJECT_ID=br-gmail`：因為 `.env` 檔案預設不會被上傳到雲端，所以部署時必須透過此指令將專案 ID 注入給 Cloud Functions 使用。
+- `--set-env-vars PROJECT_ID=YOUR_PROJECT_ID`：因為 `.env` 檔案預設不會被上傳到雲端，所以部署時必須透過此指令將專案 ID 注入給 Cloud Functions 使用。
 
 部署完成後，主控台會回傳一個 `httpsTrigger: url: https://...` 的網址，這就是您的 **Webhook URL**。
 
